@@ -28,6 +28,7 @@ end
 
 httpd_srv = net.createServer(net.TCP,10)
 
+-- gv为url中请求参数，即‘？’后的所有值解析成的table，如果没有则为空表。
 local function sendFile(c,fn,req,gv) 
    local h = "HTTP/1.0 200 OK\r\n"
    local fno = fn
