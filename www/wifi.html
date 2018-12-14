@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <!-- Required meta tags-->
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="theme-color" content="#2196f3">
+   <title>Wifi状态</title>
+   <style>
+      body {
+         margin: 2em;
+         text-align:center;
+      }
+      #output {
+         background: #444;
+         color: #eee;
+         font-size: 0.9em;
+         padding: 0.5em;
+         display: inline-block;
+      }
+      .body {
+         margin:0 auto;
+         width: 480px;
+      }
+   </style>
+</head>
+<body>
+   <div class="body">
+      <h3>WiFi状态</h3>
+      <div class="content" id="content"></div>
+   </div>
+   <!-- templates -->
+   <script type="text/x-tmpl" id="tmpl-demo">
+      <div class="content">
+         <table class="am-table">
+            <thead>
+               <tr>
+                  <th>MAC地址</th>
+                  <th>名称</th>
+                  <th>RSSI(dB)</th>
+                  <th>BSSID</th>
+                  <th>通道</th>
+               </tr>
+            </thead>
+            <tbody>
+               {% for(var i=0; i<o.items.length; i++) { %} <tr>
+                  <td>{%=o.items[i].mac%}</td>
+                  <td>{%=o.items[i].ssid%}</td>
+                  <td>{%=o.items[i].rssi%}</td>
+                  <td>{%=o.items[i].bssid%}</td>
+                  <td>{%=o.items[i].channel%}</td>
+                  </tr>
+               {% } %}
+            </tbody>
+         </table>
+      </div>
+   </script>
+   <script type="text/javascript" src="js/tmpl.min.js"></script>
+   <script type="text/javascript" src="js/app.js"></script> 
+</body>
+
+</html>
