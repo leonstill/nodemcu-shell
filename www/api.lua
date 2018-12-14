@@ -15,6 +15,7 @@
 
 return function(conn,req,gv)
    dofile("httpd/header.lua")(conn,200,"application/json")
+   syslog.print(syslog.INFO, sjson.encode(gv))
    local d = { }
    local w = gv.req
    if w then
@@ -26,15 +27,27 @@ return function(conn,req,gv)
             d.heap = node.heap()
          elseif k == 'filelist' then
             d.filelist = file.list()
+         elseif k == 'ip' then
+            d.ip = wifi.sta.getip()
+         elseif k == 'ap' then
+            d.ap = wifi.ap.getconfig(true)
+         elseif k == 'apinfo' then
+            d.apinfo = wifi.sta.getapinfo()
+         elseif k == 'wifiscan' then
+            if file.open('www/wifiscan.json') then
+               d.wifiscan = sjson.decode(file.read('\n'))
+               file.close()
+            end
          elseif k == 'upload' then
             -- future, uploading a file
          else
             d.error = "UNKNOWN REQUEST: "..k
          end
       end)
+      conn:send(sjson.encode(d))
    else
       d.error = "UNKNOWN REQUEST"
+      conn:send(sjson.encode(d))
    end
-   conn:send(sjson.encode(d))
    collectgarbage()
 end
