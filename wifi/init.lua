@@ -11,14 +11,22 @@
 if file.exists("wifi/wifi.conf") then
    local conf = dofile("wifi/wifi.conf")
    
-   wifi.setmode(conf.mode == 'ap' and wifi.SOFTAP or conf.mode == 'station' and wifi.STATION or wifi.STATIONAP)
+   wifi.setmode(conf.mode == 'ap' and wifi.SOFTAP or conf.mode == 'station' and wifi.STATION or wifi.STATIONAP, true)
    
    if(conf.mode=='ap' or conf.mode=='stationap') then 
       wifi.ap.config(conf.ap.config)
       wifi.ap.setip(conf.ap.net)
       syslog.print(syslog.INFO,"wifi "..conf.ap.config.ssid.." access point ("..wifi.sta.getmac()..") started")
       if(conf.mode ~= 'stationap') then     -- if 'stationap' then let 'station' below call net.up.lua once
-         dofile("net.up.lua")
+         -- -- DHCP is started only in SOFTAP mode !
+         -- wifi.ap.dhcp.config(conf.ap.dhcp)
+         -- if wifi.ap.dhcp.start() then
+         --    syslog.print(syslog.INFO,"DHCP started")
+         -- else
+         --    syslog.print(syslog.INFO,"DHCP start failed")
+         -- end
+         -- start net app
+        dofile("net.up.lua")
       end
    end
    if(conf.mode=='station' or conf.mode=='stationap') then
@@ -35,7 +43,7 @@ if file.exists("wifi/wifi.conf") then
          syslog.print(syslog.INFO,"wifi: connecting to "..conf.station[sta_id].config.ssid.." ...")
       end
       wifi.sta.connect()
-      wifi.sta.sethostname(string.format("esp-%06x",node.chipid()))
+      wifi.sta.sethostname("ESP-"..node.chipid())
       if conf.station.net then
          wifi.sta.setip(conf.station.net)
       end
@@ -73,6 +81,15 @@ if file.exists("wifi/wifi.conf") then
             tmr.unregister(1)
          end
       end)
+   else
+      -- 如果有cache则清除cached，并重启
+      if wifi.sta.getapinfo() then
+         wifi.sta.disconnect(function()
+            syslog.print(syslog.INFO, 'dddddddddddddddd')
+         end)
+         wifi.sta.clearconfig()
+         --node.restart()
+      end
    end
 else
    syslog.print(syslog.info,"no wifi/wifi.conf")
