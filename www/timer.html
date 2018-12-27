@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <!-- Required meta tags-->
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="theme-color" content="#2196f3">
+   <title>定时器</title>
+   <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+   <div class="body">
+      <h3 class="am-text-center">定时器</h3>
+      <div class="content" id="content"></div>
+   </div>
+   <!-- templates -->
+   <script type="text/x-tmpl" id="tmpl-main">
+      <div class="content">
+         <table class="am-table">
+            <thead>
+               <tr>
+                  <th>序号</th>
+                  <th>名称</th>
+                  <th>启动时间</th>
+                  <th>关闭时间</th>
+                  <th>设备号</th>
+               </tr>
+            </thead>
+            <tbody>
+               {% for(var i=0; i<o.items.length; i++) { %} <tr>
+                  <td>{%=i+1%}</td>
+                  <td>{%=o.items[i].title%}</td>
+                  <td>{%=o.items[i].time0%}</td>
+                  <td>{%=o.items[i].time1%}</td>
+                  <td>{%=o.items[i].deviceId%}</td>
+                  </tr>
+               {% } %}
+            </tbody>
+         </table>
+      </div>
+   </script>
+   <script type="text/x-tmpl" id="tmpl-demo">
+      <div class="content">
+         <table class="am-table">
+            <thead>
+               <tr>
+                  <th>序号</th>
+                  <th>名称</th>
+                  <th>启动时间</th>
+                  <th>关闭时间</th>
+                  <th>设备号</th>
+               </tr>
+            </thead>
+            <tbody>
+               {% for(var i=0; i<o.items.length; i++) { %} <tr>
+                  <td>{%=i+1%}</td>
+                  <td>{%=o.items[i].title%}</td>
+                  <td>{%=o.items[i].time0%}</td>
+                  <td>{%=o.items[i].time1%}</td>
+                  <td>{%=o.items[i].deviceId%}</td>
+                  </tr>
+               {% } %}
+            </tbody>
+         </table>
+      </div>
+   </script>
+   <script type="text/javascript" src="js/tmpl.js"></script>
+   <script type="text/javascript">
+      var data = [
+        {
+            title: "灯光",
+            time0: "07:00:00",
+            time1: "09:00:00",
+            deviceId: 0,
+        },{
+            title: "灯光",
+            time0: "17:00:00",
+            time1: "21:00:00",
+            deviceId: 0,
+        }
+      ];
+      document.getElementById("content").innerHTML = tmpl("tmpl-main", { items: data });
+   </script> 
+</body>
+
+</html>
