@@ -1,9 +1,15 @@
-PORT=/dev/ttyUSB0
+#PORT=/dev/ttyS5
+PORT=com6
 NAME=NodeMCU-Shell
 BACKUP=${NAME}-`date +%F`.tar.gz
 
 all::
 	@echo "make upload_all upload_shell upload_shell_core console terminal"
+
+upload_leon::
+	nodemcu-tool --port ${PORT} upload --keeppath *.lua */*.lua */*.txt */*.conf */*.dist 
+	#nodemcu-tool --port ${PORT} upload --keeppath --minify --compile shell/main.lua
+	touch .lastupload
 
 upload_all::
 	nodemcu-tool --port ${PORT} upload --keeppath *.lua */*.lua */*.txt */*.conf */*.dist display/*.mono www/imgs/* www/*.html www/favicon.ico.gz
