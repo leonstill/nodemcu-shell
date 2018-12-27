@@ -45,7 +45,7 @@ end
 if rtctime then
    if(rtctime.get() == 0) then
       if sntp then
-         local h = "pool.ntp.org"
+         local h = "ntp1.aliyun.com"
          sntp.sync(h,
             function(t,usec,server,info)
                syslog.print(syslog.INFO,"sntp:sync response from "..server)
