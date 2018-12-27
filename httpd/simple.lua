@@ -8,6 +8,7 @@
 --    - support .lua files (to execute)
 --
 -- History:
+-- 2018/12/15: 0.0.4: add 'text/css' surpport  -- leonstill@163.com
 -- 2018/02/05: 0.0.3: esp32 support
 -- 2018/01/06: 0.0.2: adding collectgarbage() and nil local variables, reduces leaks but still not entirely gone
 -- 2018/01/05: 0.0.1: first version, very simple
@@ -16,7 +17,7 @@ if httpd_srv then          -- httpd_srv exists already, ignore call (e.g. from n
    return
 end
 
-local mm = { ["html"]="text/html", ["txt"]="text/plain", ["png"]="image/x-png", ["jpg"]="image/jpeg", ["ico"]="image/x-icon" }
+local mm = { ["html"]="text/html", ["txt"]="text/plain", ["png"]="image/x-png", ["jpg"]="image/jpeg", ["ico"]="image/x-icon", ["css"]="text/css" }
 
 local conf = dofile("httpd/httpd.conf")
 if arc=='esp8266' then
