@@ -6,7 +6,7 @@ if not file.exists("demo/demo.conf") then
 end
 
 local conf = dofile("demo/demo.conf")
-print(conf.looptype or "postloop")
+-- print(conf.looptype or "postloop")
 
 local loopfile = "demo/" .. (conf.looptype or "postloop") .. ".lua"
 if file.exists(loopfile) then
