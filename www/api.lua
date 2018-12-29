@@ -45,9 +45,19 @@ return function(conn,req,gv)
          end
       end)
       conn:send(sjson.encode(d))
+   elseif gv.switch then
+      gpio.mode(1, gpio.OUTPUT)
+      if gv.switch == 'on' then
+         gpio.write(1, gpio.LOW)
+      else
+         gpio.write(1, gpio.HIGH)
+      end
+      d.success = 1
+      conn:send(sjson.encode(d))
    else
       d.error = "UNKNOWN REQUEST"
       conn:send(sjson.encode(d))
    end
+   gv = nil
    collectgarbage()
 end
