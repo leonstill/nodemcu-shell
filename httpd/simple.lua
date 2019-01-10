@@ -14,8 +14,6 @@
 -- 2018/01/06: 0.0.2: adding collectgarbage() and nil local variables, reduces leaks but still not entirely gone
 -- 2018/01/05: 0.0.1: first version, very simple
 
--- 注意： 每次ajax请求会丢失240或232个字节，很快程序会崩溃，未找到原因。
-
 if httpd_srv then          -- httpd_srv exists already, ignore call (e.g. from net.up.lua)
    return
 end
@@ -36,6 +34,7 @@ httpd_srv = net.createServer(net.TCP,10)
 local function onConnection(conn)
    --syslog.print(syslog.INFO,"client IP:"..clientIp)
 
+   -- 2018/12/30: 0.0.5: fixed the memory leak.
    local function close(c) 
       c:on('sent', nil) -- release closures context
       c:on('receive', nil)
