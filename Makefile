@@ -8,6 +8,7 @@ all::
 
 upload_leon::
 	nodemcu-tool --port ${PORT} upload --keeppath *.lua */*.lua */*.txt */*.conf */*.dist 
+	nodemcu-tool --port ${PORT} upload -k www/*.lua www/*.html www/css/*.css www/js/*.js www/imgs/*
 	#nodemcu-tool --port ${PORT} upload --keeppath --minify --compile shell/main.lua
 	touch .lastupload
 

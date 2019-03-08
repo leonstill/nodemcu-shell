@@ -7,4 +7,5 @@ dofile("rtc/init.lua")
 --dofile("tftpd/init.lua")()
 
 --dofile("demo/init.lua")
+--dofile("example/init2.lua")
 --dofile("httpd/init.lua")
